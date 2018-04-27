@@ -63,6 +63,13 @@ d3.csv("../ProdFiles/TotalPlaysLikes.csv", type, function(error, data) {
   var timeout = setTimeout(function() {
     d3.select("input[value=\"Likes\"]").property("checked", true).each(change);
   }, 2000);
+  svg.selectAll(".labels")
+              .data(data)
+              .enter().append("text")
+              .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+              .attr("dy", (d, i) => `${i * 1.7}em`)
+              .text(function(d) { return d.TrackName; })
+              .attr("fill", function(d, i) { return color(i); });
 
   function change() {
     var value = this.value;
